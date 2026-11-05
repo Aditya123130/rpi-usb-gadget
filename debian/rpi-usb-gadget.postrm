@@ -28,7 +28,7 @@ case "$1" in
     # Best-effort: remove the overlay line we added
     for cfg in /boot/firmware/config.txt /boot/config.txt; do
       [ -f "$cfg" ] || continue
-      # delete an exact match of the line we add
+      # Remove a standalone entry, or only the appended fragment from files\n      # affected by the old no-newline append bug.
       sed -i '\@^dtoverlay=dwc2,dr_mode=peripheral$@d' "$cfg" || true
     done
 

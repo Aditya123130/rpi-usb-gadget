@@ -191,7 +191,11 @@ nm_dnsmasq_remove() {
 remove_overlay() {
     cfg=$1
     [ -f "$cfg" ] || return 0
-    sed -i "\\|$OVERLAY_LINE|d" "$cfg" 2>/dev/null || true
+
+    # Remove a normal standalone entry. For files affected by the old
+    # no-newline append bug, strip only the appended fragment so any text
+    # that preceded it (for example a comment) is preserved.
+    sed -i "\\|^$OVERLAY_LINE\\$|d; s|$OVERLAY_LINE||g" "$cfg" 2>/dev/null || true
 }
 
 append_overlay() {

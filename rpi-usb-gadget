@@ -205,10 +205,9 @@ append_overlay() {
 
     # Keep the overlay out of a preceding comment and out of a model-specific
     # filter such as [pi5].
-    [ ! -s "$cfg" ] || [ "$(tail -c 1 "$cfg")" = "" ] || printf '\\n' >> "$cfg"
-    printf '[all]\\n%s\\n' "$OVERLAY_LINE" >> "$cfg"
+    [ ! -s "$cfg" ] || [ -z "$(tail -c 1 "$cfg")" ] || printf '\n' >> "$cfg"
+    printf '[all]\n%s\n' "$OVERLAY_LINE" >> "$cfg"
 }
-
 nm_status() {
   printf ':: NetworkManager:\n'
   if ! have_nmcli; then
